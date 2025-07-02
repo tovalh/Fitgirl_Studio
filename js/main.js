@@ -50,22 +50,62 @@ function handleChatEnter(event) {
     }
 }
 
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('chatInput');
-    const message = input.value.trim();
+    const messageText = input.value.trim();
 
-    if (message) {
-        addMessage(message, 'user');
+    if (messageText) {
+        addMessage(messageText, 'user');
         input.value = '';
+        input.disabled = true; // Deshabilitamos el input mientras la IA piensa
 
-        // Simulate AI response (in production, this would call your PHP backend)
-        setTimeout(() => {
-            const botResponse = generateBotResponse(message);
-            addMessage(botResponse, 'bot');
-        }, 1000);
+        // Añadimos un indicador de "escribiendo..."
+        const messagesContainer = document.getElementById('chatMessages');
+        const typingIndicator = document.createElement('div');
+        typingIndicator.id = 'typing-indicator';
+        typingIndicator.innerHTML = `
+            <div class="message-bot mb-3">
+                <div class="bg-light p-2 rounded">
+                    <i class="fas fa-spinner fa-spin"></i> Sofía está escribiendo...
+                </div>
+            </div>`;
+        messagesContainer.appendChild(typingIndicator);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+
+        try {
+            // Hacemos la llamada a nuestro backend
+            const response = await fetch('php/chatbot_handler.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // Enviamos todo el historial para que la IA tenga contexto
+                body: JSON.stringify({ messages: chatHistory }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor.');
+            }
+
+            const data = await response.json();
+            const aiReply = data.reply;
+
+            // Quitamos el indicador de "escribiendo..."
+            document.getElementById('typing-indicator').remove();
+            // Añadimos la respuesta real de la IA
+            addMessage(aiReply, 'bot');
+
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('typing-indicator').remove();
+            addMessage('Lo siento, estoy teniendo problemas técnicos. Inténtalo más tarde.', 'bot');
+        } finally {
+            input.disabled = false; // Rehabilitamos el input
+            input.focus();
+        }
     }
 }
-
 function addMessage(message, sender) {
     const messagesContainer = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
@@ -97,7 +137,7 @@ function addMessage(message, sender) {
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    chatHistory.push({message, sender, timestamp: now});
+    chatHistory.push({ role: sender === 'user' ? 'user' : 'assistant', content: message });
 }
 
 function generateBotResponse(userMessage) {

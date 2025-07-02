@@ -51,6 +51,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // ----- 4. ENVIAR -----
         $mail->send();
 
+        try {
+            $dsn = "pgsql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
+            // Creamos la instancia de PDO
+            $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+            // Preparamos la consulta para evitar inyección SQL
+            $sql = "INSERT INTO leads (nombre, email, telefono, clase_interes) VALUES (?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+
+            // Ejecutamos la consulta pasando los datos en un array
+            $stmt->execute([$nombre, $email, $telefono, $clase_interes]);
+        } catch (PDOException $e) {
+            error_log("Error de base de datos: " . $e->getMessage());
+        }
         // Si se envía, mostramos un mensaje de éxito al usuario
         echo '<h1>¡Gracias, ' . $nombre . '!</h1>';
         echo '<p>Tu solicitud ha sido enviada. Te contactaremos muy pronto para agendar tu clase. 💪✨</p>';
