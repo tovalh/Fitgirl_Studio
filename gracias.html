@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias! - FitGirl Studio</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- AOS Animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #FF1B6B;
+            --secondary: #0A0A0A;
+            --accent: #FFD700;
+            --premium-gold: #D4AF37;
+            --bg-light: #FAFAFA;
+            --text-dark: #1A1A1A;
+            --gradient: linear-gradient(135deg, #FF1B6B 0%, #000000 50%, #FF1B6B 100%);
+            --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FF1B6B 50%, #000000 100%);
+            --luxury-shadow: 0 20px 60px rgba(255, 27, 107, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #000 0%, #0A0A0A 50%, #000 100%);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Premium Navbar */
+        .navbar {
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 27, 107, 0.1);
+        }
+
+        .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 27, 107, 0.3);
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-weight: 600;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary) !important;
+            text-shadow: 0 0 20px rgba(255, 27, 107, 0.5);
+        }
+
+        .btn-primary-custom {
+            color: white;
+            background: var(--gradient);
+            border: 2px solid transparent;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--luxury-shadow);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary-custom:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 27, 107, 0.4);
+            border-color: var(--accent);
+        }
+
+        /* Thank You Section */
+        .thank-you-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #000 0%, #0A0A0A 50%, #000 100%);
+            overflow: hidden;
+        }
+
+        .thank-you-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 27, 107, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .thank-you-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 27, 107, 0.3);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            text-align: center;
+            box-shadow: var(--luxury-shadow);
+            position: relative;
+            overflow: hidden;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .thank-you-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 27, 107, 0.1) 0%, transparent 70%);
+            animation: luxuryFloat 4s ease-in-out infinite;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 20px 60px rgba(255, 27, 107, 0.4);
+            animation: premiumGlow 2s ease-in-out infinite;
+            border: 3px solid var(--accent);
+        }
+
+        .thank-you-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 27, 107, 0.3);
+        }
+
+        .thank-you-subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .thank-you-message {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+        }
+
+        .next-steps {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: left;
+        }
+
+        .next-steps h5 {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .next-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .next-steps li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(145deg, rgba(255, 27, 107, 0.1), rgba(255, 27, 107, 0.05));
+            border: 1px solid rgba(255, 27, 107, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-info h6 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0.5rem 0;
+        }
+
+        .social-links {
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-5px) scale(1.2);
+            text-shadow: 0 0 20px rgba(255, 27, 107, 0.8);
+        }
+
+        /* Animations */
+        @keyframes luxuryFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+
+        @keyframes premiumGlow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(255, 27, 107, 0.4); }
+            50% { box-shadow: 0 30px 80px rgba(255, 27, 107, 0.6); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .thank-you-title {
+                font-size: 2.5rem;
+            }
+
+            .thank-you-card {
+                padding: 3rem 2rem;
+                margin: 1rem;
+            }
+
+            .success-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">FitGirl Studio</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#home">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#clases">Clases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#planes">Planes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#contacto">Contacto</a>
+                </li>
+            </ul>
+            <a href="index.html#contacto" class="btn btn-primary-custom ms-3">Clase Gratis</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Thank You Section -->
+<section class="thank-you-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="thank-you-card" data-aos="fade-up">
+                    <div class="success-icon" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fas fa-check"></i>
+                    </div>
+
+                    <h1 class="thank-you-title" data-aos="fade-up" data-aos-delay="300">¡Gracias!</h1>
+
+                    <p class="thank-you-subtitle" data-aos="fade-up" data-aos-delay="400">
+                        Tu mensaje ha sido enviado correctamente
+                    </p>
+
+                    <div class="thank-you-message" data-aos="fade-up" data-aos-delay="500">
+                        <p>¡Bienvenida a la familia FitGirl Studio! 💪✨</p>
+                        <p>Hemos recibido tu solicitud y estamos emocionadas de acompañarte en tu viaje de transformación. Nuestro equipo se pondrá en contacto contigo muy pronto para coordinar tu clase de prueba gratuita.</p>
+                    </div>
+
+                    <div class="next-steps" data-aos="fade-up" data-aos-delay="600">
+                        <h5>¿Qué sigue ahora?</h5>
+                        <ul>
+                            <li>Te contactaremos en las próximas 24 horas</li>
+                            <li>Coordinaremos tu clase de prueba gratuita</li>
+                            <li>Te enviaremos información sobre nuestras instalaciones</li>
+                            <li>Resolveremos todas tus dudas sobre nuestros programas</li>
+                        </ul>
+                    </div>
+
+                    <div class="contact-info" data-aos="fade-up" data-aos-delay="700">
+                        <h6>¿Tienes alguna pregunta urgente?</h6>
+                        <p><i class="fas fa-phone me-2"></i> +56 9 1234 5678</p>
+                        <p><i class="fas fa-envelope me-2"></i> hola@fitgirlstudio.cl</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Av. Providencia 1234, Santiago</p>
+                    </div>
+
+                    <div class="social-links" data-aos="fade-up" data-aos-delay="800">
+                        <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1rem;">Síguenos en redes sociales:</p>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+
+                    <div class="mt-4" data-aos="fade-up" data-aos-delay="900">
+                        <a href="index.html" class="btn btn-primary-custom me-3">Volver al Inicio</a>
+                        <a href="index.html#planes" class="btn btn-primary-custom">Ver Planes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/56912345678?text=Hola! Acabo de enviar mi solicitud y tengo algunas preguntas"
+   class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+
+    // Auto redirect after 30 seconds (optional)
+    setTimeout(() => {
+        const redirect = confirm('¿Te gustaría volver a la página principal?');
+        if (redirect) {
+            window.location.href = 'index.html';
+        }
+    }, 30000);
+</script>
+
+<style>
+    .whatsapp-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        border: 2px solid #25D366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.8rem;
+        text-decoration: none;
+        box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+        transition: all 0.4s ease;
+        z-index: 999;
+    }
+
+    .whatsapp-btn:hover {
+        transform: scale(1.15);
+        color: white;
+        box-shadow: 0 20px 60px rgba(37, 211, 102, 0.6);
+    }
+</style>
+</body>
+</html>

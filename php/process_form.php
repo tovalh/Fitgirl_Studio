@@ -66,20 +66,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             error_log("Error de base de datos: " . $e->getMessage());
         }
         // Si se envía, mostramos un mensaje de éxito al usuario
-        echo '<h1>¡Gracias, ' . $nombre . '!</h1>';
-        echo '<p>Tu solicitud ha sido enviada. Te contactaremos muy pronto para agendar tu clase. 💪✨</p>';
-        echo '<a href="../index.html" style="color: #FF1B6B;">Volver al inicio</a>';
+        header('Location: ../gracias.html');
 
     } catch (Exception $e) {
         // Si hay un error, le mostramos al usuario un mensaje y a nosotros el error técnico
-        echo "<h1>Lo sentimos, hubo un error.</h1>";
-        echo "<p>El mensaje no pudo ser enviado. Por favor, intenta más tarde.</p>";
+        header('Location: ../error.html');
         // La siguiente línea es para nosotros, para saber qué falló durante el desarrollo.
         // En un sitio en producción, esta línea se debería quitar o registrar en un archivo.
         echo "Mailer Error: " . $mail->ErrorInfo;
     }
 } else {
     // Si alguien intenta entrar al archivo PHP directamente, lo mandamos al inicio
-    header("Location: ../index.html");
+    header('Location: ../error.html');
     exit();
 }
